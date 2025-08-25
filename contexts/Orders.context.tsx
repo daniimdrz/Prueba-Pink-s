@@ -11,6 +11,7 @@ import {
 export type OrdersContextProps = {
   orders: Array<Order>;
   pickup: (order: Order) => void;
+  updateOrderState: (orderId: string, newState: "PENDING" | "IN_PROGRESS" | "READY" | "DELIVERED") => void;
 };
 
 export const OrdersContext = createContext<OrdersContextProps>(
@@ -39,9 +40,18 @@ export function OrdersProvider(props: OrdersProviderProps) {
     );
   };
 
+  const updateOrderState = (orderId: string, newState: "PENDING" | "IN_PROGRESS" | "READY" | "DELIVERED") => {
+    setOrders((prev) =>
+      prev.map((order) =>
+        order.id === orderId ? { ...order, state: newState } : order
+      )
+    );
+  };
+
   const context = {
     orders,
     pickup,
+    updateOrderState,
   };
 
   return (

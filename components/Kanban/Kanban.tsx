@@ -1,23 +1,36 @@
 import s from "./Kanban.module.scss";
 import Column from "../Column";
 import { useOrders } from "@/contexts/Orders.context";
+import { DragDropContext } from "react-beautiful-dnd";
 
 export default function Kanban() {
-  const { orders } = useOrders();
+  const { orders, updateOrderState } = useOrders();
+
+  const handleDragEnd = (result: any) => {
+    const { destination, draggableId } = result;
+    if (!destination) return;
+    updateOrderState(draggableId, destination.droppableId);
+  };
 
   return (
-    <section className={s["pk-kanban"]}>
-      <Column
-        title="Pendiente"
-        orders={orders.filter((i) => i.state === "PENDING")}
-        onClick={() =>
-          alert(
-            "mmmmm..., deberias de modificar esto! tenemos que hacer que las ordenes lleguen hasta listo y se entreguen!"
-          )
-        }
-      />
-      <Column title="En preparación" orders={[]} />
-      <Column title="Listo" orders={[]} />
-    </section>
+    <DragDropContext onDragEnd={handleDragEnd}>
+      <section className={s["pk-kanban"]}>
+        <Column
+          title="Pendiente"
+          droppableId="PENDING"
+          orders={orders.filter((i) => i.state === "PENDING")}
+        />
+        <Column
+          title="En preparación"
+          droppableId="IN_PROGRESS"
+          orders={orders.filter((i) => i.state === "IN_PROGRESS")}
+        />
+        <Column
+          title="Listo"
+          droppableId="READY"
+          orders={orders.filter((i) => i.state === "READY")}
+        />
+      </section>
+    </DragDropContext>
   );
 }
