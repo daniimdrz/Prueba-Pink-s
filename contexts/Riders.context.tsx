@@ -11,6 +11,7 @@ import { Rider } from "@/dtos/Rider.dto";
 
 export type RidersContextProps = {
   riders: Array<Rider>;
+  riderPickup: (orderId: string) => void;
 };
 
 export const RidersContext = createContext<RidersContextProps>(
@@ -27,6 +28,14 @@ export function RidersProvider(props: RidersProviderProps) {
   const [assignedOrders, setAssignedOrders] = useState<string[]>([]);
   const { orders, pickup } = useOrders();
 
+  const riderPickup = (orderId: string) => {
+    const orderToPickup = orders.find((o) => o.id === orderId);
+    if (orderToPickup && orderToPickup.state === "READY") {
+      pickup(orderToPickup);
+      setRiders((prev) => prev.filter((r) => r.orderWanted !== orderId));
+    }
+  };
+
   useEffect(() => {
     const order = orders.find((order) => !assignedOrders.includes(order.id));
     if (order) {
@@ -36,14 +45,13 @@ export function RidersProvider(props: RidersProviderProps) {
           ...prev,
           {
             orderWanted: order.id,
-            pickup,
           },
         ]);
       }, getRandomInterval(4_000, 10_000));
     }
   }, [orders]);
 
-  const context = { riders };
+  const context = { riders, riderPickup };
   return (
     <RidersContext.Provider value={context}>
       {props.children}
