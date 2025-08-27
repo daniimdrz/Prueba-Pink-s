@@ -36,6 +36,8 @@ export function RidersProvider(props: RidersProviderProps) {
     }
   };
 
+  const { soundEnabled } = require("@/contexts/SoundSettings.context").useSoundSettings();
+
   useEffect(() => {
     const order = orders.find((order) => !assignedOrders.includes(order.id));
     if (order) {
@@ -47,9 +49,17 @@ export function RidersProvider(props: RidersProviderProps) {
             orderWanted: order.id,
           },
         ]);
+        if (soundEnabled) {
+          try {
+            const audio = new window.Audio("/sounds/riders.mp3");
+            audio.play();
+          } catch (e) {
+            // Silenciar error si no se puede reproducir
+          }
+        }
       }, getRandomInterval(4_000, 10_000));
     }
-  }, [orders]);
+  }, [orders, soundEnabled]);
 
   const context = { riders, riderPickup };
   return (
