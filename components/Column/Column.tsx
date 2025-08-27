@@ -41,7 +41,18 @@ export default function Column(props: ColumnProps) {
                   {...provided.draggableProps}
                   {...provided.dragHandleProps}
                   onClick={() => props.onClick && props.onClick(order)}
-                  className={s["pk-card"]}
+                  className={
+                    `${s["pk-card"]} ` +
+                    (order.state === "PENDING"
+                      ? s["pk-card--pending"]
+                      : order.state === "IN_PROGRESS"
+                      ? s["pk-card--inprogress"]
+                      : order.state === "READY"
+                      ? s["pk-card--ready"]
+                      : order.state === "DELIVERED"
+                      ? s["pk-card--delivered"]
+                      : "")
+                  }
                 >
                     <div style={{ fontSize: "1.5em", marginBottom: "0.5em" }}>
                         {order.state === "PENDING" && "⏳"}

@@ -35,4 +35,16 @@
     transform: scale(0.99);
     background-color: #f5f5f5;
   }
+  &--pending {
+    background-color: #fffbe6;
+  }
+  &--inprogress {
+    background-color: #e6f7ff;
+  }
+  &--ready {
+    background-color: #e6ffe6;
+  }
+  &--delivered {
+    background-color: #f0f0f0;
+  }
 }
