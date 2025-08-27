@@ -54,12 +54,24 @@ export function RidersProvider(props: RidersProviderProps) {
             const audio = new window.Audio("/sounds/riders.mp3");
             audio.play();
           } catch (e) {
-            // Silenciar error si no se puede reproducir
           }
         }
       }, getRandomInterval(4_000, 10_000));
     }
-  }, [orders, soundEnabled]);
+  }, [orders, soundEnabled, assignedOrders]);
+
+  useEffect(() => {
+    const currentOrderIds = new Set(orders.map(o => o.id));
+
+    setRiders(prevRiders => 
+      prevRiders.filter(rider => currentOrderIds.has(rider.orderWanted))
+    );
+
+    setAssignedOrders(prevAssigned => 
+      prevAssigned.filter(orderId => currentOrderIds.has(orderId))
+    );
+  }, [orders]);
+
 
   const context = { riders, riderPickup };
   return (

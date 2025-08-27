@@ -70,22 +70,33 @@ export default function Column(props: ColumnProps) {
                       <div key={item.id}></div>
                     ))}
                   </div>
-                  <div style={{ display: "flex", justifyContent: "flex-end", alignItems: "flex-end", marginTop: "16px" }}>
-                    <button
-                      style={{
-                        background: "#ffeaea",
-                        color: "#ae191a",
-                        border: "none",
-                        borderRadius: "6px",
-                        padding: "6px 12px",
-                        cursor: "pointer",
-                        fontWeight: 600,
-                      }}
-                      onClick={() => cancelOrder(order.id)}
-                    >
-                      Pedido cancelado
-                    </button>
-                  </div>
+                    <div style={{ display: "flex", justifyContent: "flex-end", alignItems: "flex-end", marginTop: "16px" }}>
+                      <button
+                        style={{
+                          background: "none",
+                          color: "#ae191a",
+                          border: "none",
+                          borderRadius: "50%",
+                          width: "32px",
+                          height: "32px",
+                          fontSize: "1.3em",
+                          cursor: "pointer",
+                          fontWeight: 700,
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          transition: "background 0.2s",
+                        }}
+                        title="Cancelar pedido"
+                        onClick={() => {
+                          if (window.confirm("¿Este pedido ha sido cancelado?")) {
+                            cancelOrder(order.id);
+                          }
+                        }}
+                      >
+                        ×
+                      </button>
+                    </div>
                 </div>
               )}
             </Draggable>

@@ -25,11 +25,13 @@ export type OrdersProviderProps = {
 };
 
 export function OrdersProvider(props: OrdersProviderProps) {
+  const [orders, setOrders] = useState<Array<Order>>([]);
+  const { soundEnabled } = require("@/contexts/SoundSettings.context").useSoundSettings();
+  
+  // La función ahora solo se encarga de eliminar el pedido.
   const cancelOrder = (orderId: string) => {
     setOrders((prev) => prev.filter((order) => order.id !== orderId));
   };
-  const [orders, setOrders] = useState<Array<Order>>([]);
-    const { soundEnabled } = require("@/contexts/SoundSettings.context").useSoundSettings();
 
   useEffect(() => {
     const orderOrchestrator = new OrderOrchestrator();
