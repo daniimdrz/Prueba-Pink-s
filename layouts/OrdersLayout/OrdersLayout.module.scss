@@ -12,14 +12,20 @@
     width: 100%;
     padding: 20px;
     display: flex;
-    flex-direction: column;
-    gap: 8px;
-    justify-content: flex-start;
+    flex-direction: row; /* Cambiado a row */
+    justify-content: space-between; /* Para separar los elementos a los extremos */
+    align-items: center; /* Para centrar verticalmente */
     border-bottom: 1px solid $gray-900;
-    align-items: flex-start;
+
+    /* Estilos para el nuevo div que contiene el logo y el subtítulo */
+    & > div {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 8px;
+    }
   }
   &__app {
-    display: grid;
     display: grid;
     width: 100%;
     height: 100dvb;

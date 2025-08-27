@@ -15,15 +15,18 @@ export default function OrdersLayout() {
   return (
     <main className={s["pk-layout"]}>
       <nav className={s["pk-layout__navbar"]}>
-        <Logo size="S" />
-        <span>KDS: Krazy Display Service</span>
+        {/* Se agrupan el logo y el subtítulo */}
+        <div>
+          <Logo size="S" />
+          <span>KDS: Krazy Display Service</span>
+        </div>
         <button
           style={{
             background: "none",
             border: "none",
             cursor: "pointer",
             fontSize: "1.5em",
-            marginLeft: "auto",
+            // Se elimina marginLeft: "auto" ya que el contenedor se encarga del posicionamiento
           }}
           title={soundEnabled ? "Desactivar sonido" : "Activar sonido"}
           onClick={toggleSound}
