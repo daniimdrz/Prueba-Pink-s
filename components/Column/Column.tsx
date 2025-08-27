@@ -12,6 +12,12 @@ export type ColumnProps = {
 
 export default function Column(props: ColumnProps) {
   const { cancelOrder } = require("@/contexts/Orders.context").useOrders();
+  // Ordenar las órdenes: alta prioridad primero
+  const sortedOrders = [...props.orders].sort((a, b) => {
+    if (a.priority === "HIGH" && b.priority !== "HIGH") return -1;
+    if (a.priority !== "HIGH" && b.priority === "HIGH") return 1;
+    return 0;
+  });
   return (
     <Droppable droppableId={props.droppableId}>
       {(provided) => (
@@ -34,7 +40,7 @@ export default function Column(props: ColumnProps) {
               </span>
             </h3>
           </div>
-          {props.orders.map((order, idx) => (
+          {sortedOrders.map((order, idx) => (
             <Draggable key={order.id} draggableId={order.id} index={idx}>
               {(provided) => (
                 <div
@@ -55,11 +61,26 @@ export default function Column(props: ColumnProps) {
                       : "")
                   }
                 >
-                    <div style={{ fontSize: "1.5em", marginBottom: "0.5em" }}>
-                        {order.state === "PENDING" && "⏳"}
-                        {order.state === "IN_PROGRESS" && "🧑‍🍳"}
-                        {order.state === "READY" && "✅"}
-                    </div>
+                  <div style={{ display: "flex", alignItems: "center", marginBottom: "0.5em", gap: "8px" }}>
+                    <span style={{ fontSize: "1.5em" }}>
+                      {order.state === "PENDING" && "⏳"}
+                      {order.state === "IN_PROGRESS" && "🧑‍🍳"}
+                      {order.state === "READY" && "✅"}
+                    </span>
+                    {order.priority === "HIGH" && (
+                      <span style={{
+                        background: "#ff3b3b",
+                        color: "#fff",
+                        fontWeight: 700,
+                        borderRadius: "8px",
+                        padding: "2px 10px",
+                        fontSize: "0.95em",
+                        letterSpacing: "0.5px",
+                      }}>
+                        Alta prioridad
+                      </span>
+                    )}
+                  </div>
                   <div>
                     <span>
                       orden: <b>{order.id}</b>
@@ -70,33 +91,33 @@ export default function Column(props: ColumnProps) {
                       <div key={item.id}></div>
                     ))}
                   </div>
-                    <div style={{ display: "flex", justifyContent: "flex-end", alignItems: "flex-end", marginTop: "16px" }}>
-                      <button
-                        style={{
-                          background: "none",
-                          color: "#ae191a",
-                          border: "none",
-                          borderRadius: "50%",
-                          width: "32px",
-                          height: "32px",
-                          fontSize: "1.3em",
-                          cursor: "pointer",
-                          fontWeight: 700,
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                          transition: "background 0.2s",
-                        }}
-                        title="Cancelar pedido"
-                        onClick={() => {
-                          if (window.confirm("¿Este pedido ha sido cancelado?")) {
-                            cancelOrder(order.id);
-                          }
-                        }}
-                      >
-                        ×
-                      </button>
-                    </div>
+                  <div style={{ display: "flex", justifyContent: "flex-end", alignItems: "flex-end", marginTop: "16px" }}>
+                    <button
+                      style={{
+                        background: "none",
+                        color: "#ae191a",
+                        border: "none",
+                        borderRadius: "50%",
+                        width: "32px",
+                        height: "32px",
+                        fontSize: "1.3em",
+                        cursor: "pointer",
+                        fontWeight: 700,
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        transition: "background 0.2s",
+                      }}
+                      title="Cancelar pedido"
+                      onClick={() => {
+                        if (window.confirm("¿Este pedido ha sido cancelado?")) {
+                          cancelOrder(order.id);
+                        }
+                      }}
+                    >
+                      ×
+                    </button>
+                  </div>
                 </div>
               )}
             </Draggable>

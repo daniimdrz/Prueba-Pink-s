@@ -17,6 +17,7 @@ export class OrderOrchestrator {
         id: getRandomId(),
         state: "PENDING",
         items: [],
+        priority: Math.random() < 0.25 ? "HIGH" : "NORMAL", 
       });
       this.maxOrders--;
       if (this.maxOrders <= 0) {
