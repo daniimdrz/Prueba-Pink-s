@@ -6,6 +6,10 @@ import { DragDropContext } from "react-beautiful-dnd";
 export default function Kanban() {
   const { orders, updateOrderState } = useOrders();
 
+  const pendingOrders = orders.filter((i) => i.state === "PENDING");
+  const inProgressOrders = orders.filter((i) => i.state === "IN_PROGRESS");
+  const readyOrders = orders.filter((i) => i.state === "READY");
+
   const handleDragEnd = (result: any) => {
     const { destination, draggableId } = result;
     if (!destination) return;
@@ -18,17 +22,20 @@ export default function Kanban() {
         <Column
           title="Pendiente"
           droppableId="PENDING"
-          orders={orders.filter((i) => i.state === "PENDING")}
+          orders={pendingOrders}
+          count={pendingOrders.length}
         />
         <Column
           title="En preparación"
           droppableId="IN_PROGRESS"
-          orders={orders.filter((i) => i.state === "IN_PROGRESS")}
+          orders={inProgressOrders}
+          count={inProgressOrders.length}
         />
         <Column
           title="Listo"
           droppableId="READY"
-          orders={orders.filter((i) => i.state === "READY")}
+          orders={readyOrders}
+          count={readyOrders.length}
         />
       </section>
     </DragDropContext>

@@ -6,6 +6,7 @@ export type ColumnProps = {
   orders: Array<Order>;
   title: string;
   droppableId: string;
+  count: number;
   onClick?: (order: Order) => void;
 };
 
@@ -19,7 +20,18 @@ export default function Column(props: ColumnProps) {
           {...provided.droppableProps}
         >
           <div className={s["pk-column__title"]}>
-            <h3>{props.title}</h3>
+            <h3>
+              {props.title}{" "}
+              <span
+                style={{
+                  color: "#888",
+                  fontWeight: 400,
+                  fontSize: "0.95em",
+                }}
+              >
+                ({props.count})
+              </span>
+            </h3>
           </div>
           {props.orders.map((order, idx) => (
             <Draggable key={order.id} draggableId={order.id} index={idx}>
