@@ -57,7 +57,7 @@ export function OrdersProvider(props: OrdersProviderProps) {
       setOrders((prev) => [...prev, order]);
       if (soundEnabled) {
         try {
-          const audio = new window.Audio("/sounds/pedido.mp3");
+          const audio = new window.Audio(order.priority === "HIGH" ? "/sounds/prioridad.mp3" : "/sounds/pedido.mp3");
           audio.play();
         } catch (e) {
             // Silenciar error
