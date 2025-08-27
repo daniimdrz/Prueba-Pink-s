@@ -12,6 +12,7 @@ export type OrdersContextProps = {
   orders: Array<Order>;
   pickup: (order: Order) => void;
   updateOrderState: (orderId: string, newState: "PENDING" | "IN_PROGRESS" | "READY" | "DELIVERED") => void;
+  cancelOrder: (orderId: string) => void;
 };
 
 export const OrdersContext = createContext<OrdersContextProps>(
@@ -24,6 +25,9 @@ export type OrdersProviderProps = {
 };
 
 export function OrdersProvider(props: OrdersProviderProps) {
+  const cancelOrder = (orderId: string) => {
+    setOrders((prev) => prev.filter((order) => order.id !== orderId));
+  };
   const [orders, setOrders] = useState<Array<Order>>([]);
     const { soundEnabled } = require("@/contexts/SoundSettings.context").useSoundSettings();
 
@@ -66,6 +70,7 @@ export function OrdersProvider(props: OrdersProviderProps) {
     orders,
     pickup,
     updateOrderState,
+    cancelOrder,
   };
 
   return (

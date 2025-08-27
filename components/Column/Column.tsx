@@ -11,6 +11,7 @@ export type ColumnProps = {
 };
 
 export default function Column(props: ColumnProps) {
+  const { cancelOrder } = require("@/contexts/Orders.context").useOrders();
   return (
     <Droppable droppableId={props.droppableId}>
       {(provided) => (
@@ -68,6 +69,22 @@ export default function Column(props: ColumnProps) {
                     {order.items.map((item) => (
                       <div key={item.id}></div>
                     ))}
+                  </div>
+                  <div style={{ display: "flex", justifyContent: "flex-end", alignItems: "flex-end", marginTop: "16px" }}>
+                    <button
+                      style={{
+                        background: "#ffeaea",
+                        color: "#ae191a",
+                        border: "none",
+                        borderRadius: "6px",
+                        padding: "6px 12px",
+                        cursor: "pointer",
+                        fontWeight: 600,
+                      }}
+                      onClick={() => cancelOrder(order.id)}
+                    >
+                      Pedido cancelado
+                    </button>
                   </div>
                 </div>
               )}
