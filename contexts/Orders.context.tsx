@@ -25,14 +25,26 @@ export type OrdersProviderProps = {
 
 export function OrdersProvider(props: OrdersProviderProps) {
   const [orders, setOrders] = useState<Array<Order>>([]);
+    const { soundEnabled } = require("@/contexts/SoundSettings.context").useSoundSettings();
 
   useEffect(() => {
     const orderOrchestrator = new OrderOrchestrator();
     const listener = orderOrchestrator.run();
-    listener.on("order", (order) => {
+    const handleOrder = (order: Order) => {
       setOrders((prev) => [...prev, order]);
-    });
-  }, []);
+      if (soundEnabled) {
+        try {
+          const audio = new window.Audio("/sounds/pedido.mp3");
+          audio.play();
+        } catch (e) {
+        }
+      }
+    };
+    listener.on("order", handleOrder);
+    return () => {
+      if (listener && listener.off) listener.off("order", handleOrder);
+    };
+  }, [soundEnabled]);
 
   const pickup = (order: Order) => {
     setOrders((prev) =>
