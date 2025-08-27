@@ -1,45 +1,57 @@
-import React from "react";
+import React, { useState } from "react";
 import { useSoundSettings } from "@/contexts/SoundSettings.context";
 import Logo from "@/bases/Logo";
 import s from "./OrdersLayout.module.scss";
 import Riders from "@/components/Riders";
 import Kanban from "@/components/Kanban";
-import { useOrders } from "@/contexts/Orders.context";
-import { useRiders } from "@/contexts/Riders.context";
+import History from "@/components/History/History";
 
 export default function OrdersLayout() {
-  const { orders } = useOrders();
-  const { riders } = useRiders();
   const { soundEnabled, toggleSound } = useSoundSettings();
+  const [showHistory, setShowHistory] = useState<boolean>(false);
 
   return (
     <main className={s["pk-layout"]}>
       <nav className={s["pk-layout__navbar"]}>
-        {/* Se agrupan el logo y el subtítulo */}
-        <div>
+        {/* Logo y subtítulo a la izquierda */}
+        <div className={s["pk-layout__navbar-left"]}>
           <Logo size="S" />
           <span>KDS: Krazy Display Service</span>
         </div>
-        <button
-          style={{
-            background: "none",
-            border: "none",
-            cursor: "pointer",
-            fontSize: "1.5em",
-            // Se elimina marginLeft: "auto" ya que el contenedor se encarga del posicionamiento
-          }}
-          title={soundEnabled ? "Desactivar sonido" : "Activar sonido"}
-          onClick={toggleSound}
-        >
-          {soundEnabled ? "🔊" : "🔇"}
-        </button>
-      </nav>
-      <article className={s["pk-layout__app"]}>
-        <div style={{ width: "100%" }}>
-          <Kanban />
+
+        {/* Grupo de botones a la derecha */}
+        <div className={s["pk-layout__navbar-right"]}>
+          {/* Botón de texto para el historial */}
+          <button
+            className={s["pk-layout__text-button"]}
+            title={showHistory ? "Ocultar el historial" : "Mostrar el historial"}
+            onClick={() => setShowHistory(!showHistory)}
+          >
+            {showHistory ? "Ocultar Historial" : "Mostrar Historial"}
+          </button>
+          
+          {/* Botón de icono para el sonido */}
+          <button
+            className={s["pk-layout__icon-button"]}
+            title={soundEnabled ? "Desactivar sonido" : "Activar sonido"}
+            onClick={toggleSound}
+          >
+            {soundEnabled ? "🔊" : "🔇"}
+          </button>
         </div>
-        <Riders />
-      </article>
+      </nav>
+
+      {/* Renderizado condicional de la vista */}
+      {showHistory ? (
+        <History />
+      ) : (
+        <article className={s["pk-layout__app"]}>
+          <div style={{ width: "100%" }}>
+            <Kanban />
+          </div>
+          <Riders />
+        </article>
+      )}
     </main>
   );
 }

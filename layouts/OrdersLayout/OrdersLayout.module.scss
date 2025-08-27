@@ -8,27 +8,72 @@
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
+
   &__navbar {
     width: 100%;
     padding: 20px;
     display: flex;
-    flex-direction: row; /* Cambiado a row */
-    justify-content: space-between; /* Para separar los elementos a los extremos */
-    align-items: center; /* Para centrar verticalmente */
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
     border-bottom: 1px solid $gray-900;
+  }
 
-    /* Estilos para el nuevo div que contiene el logo y el subtítulo */
-    & > div {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 8px;
+  &__navbar-left {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  &__navbar-right {
+    display: flex;
+    align-items: center;
+    gap: 16px; // Espacio entre los botones
+  }
+
+  // Nueva clase para el botón con texto
+  &__text-button {
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #333;
+    padding: 8px 16px;
+    border-radius: 8px;
+    transition: background-color 0.2s, border-color 0.2s;
+
+    &:hover {
+      background-color: #e0e0e0;
+      border-color: #bbb;
     }
   }
+
+  // Estilos para el botón de icono (sonido)
+  &__icon-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.7em;
+    padding: 5px;
+    border-radius: 50%;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s;
+
+    &:hover {
+      background-color: #f0f0f0;
+    }
+  }
+
   &__app {
     display: grid;
     width: 100%;
-    height: 100dvb;
+    height: 100%;
     grid-template-columns: auto 360px;
     gap: 20px;
     background-color: $gray-1000;
