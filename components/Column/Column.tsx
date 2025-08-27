@@ -43,6 +43,11 @@ export default function Column(props: ColumnProps) {
                   onClick={() => props.onClick && props.onClick(order)}
                   className={s["pk-card"]}
                 >
+                    <div style={{ fontSize: "1.5em", marginBottom: "0.5em" }}>
+                        {order.state === "PENDING" && "⏳"}
+                        {order.state === "IN_PROGRESS" && "🧑‍🍳"}
+                        {order.state === "READY" && "✅"}
+                    </div>
                   <div>
                     <span>
                       orden: <b>{order.id}</b>
