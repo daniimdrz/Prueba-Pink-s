@@ -60,7 +60,6 @@ export function OrdersProvider(props: OrdersProviderProps) {
           const audio = new window.Audio(order.priority === "HIGH" ? "/sounds/prioridad.mp3" : "/sounds/pedido.mp3");
           audio.play();
         } catch (e) {
-            // Silenciar error
         }
       }
     };
@@ -71,31 +70,30 @@ export function OrdersProvider(props: OrdersProviderProps) {
   }, [soundEnabled]);
 
   const pickup = (order: Order) => {
-    // Primero, añade al historial
     addToHistory(order.id, "ENTREGADO");
-    // Luego, actualiza el estado (o elimina, según la lógica de negocio)
     setOrders((prev) =>
       prev.map((o) =>
         o.id === order.id ? { ...o, state: "DELIVERED" } : o
       )
     );
-     // Opcional: si quieres que desaparezca de la vista principal tras la entrega
     setTimeout(() => {
         setOrders((prev) => prev.filter((o) => o.id !== order.id));
-    }, 500); // Pequeño delay para que se vea el cambio
+    }, 500); 
   };
 
   const updateOrderState = (orderId: string, newState: "PENDING" | "IN_PROGRESS" | "READY" | "DELIVERED") => {
     setOrders((prev) =>
       prev.map((order) =>
-        order.id === orderId ? { ...order, state: newState } : order
+        order.id === orderId
+          ? { ...order, state: newState, enteredAt: Date.now() }
+          : order
       )
     );
   };
 
   const context = {
     orders,
-    orderHistory, // Se expone el historial
+    orderHistory, 
     pickup,
     updateOrderState,
     cancelOrder,

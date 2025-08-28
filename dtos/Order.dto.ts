@@ -5,4 +5,5 @@ export type Order = {
   state: "PENDING" | "IN_PROGRESS" | "READY" | "DELIVERED";
   items: Array<Item>;
   priority?: "NORMAL" | "HIGH";
+  enteredAt: number;
 };

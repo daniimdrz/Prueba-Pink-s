@@ -18,7 +18,8 @@ export class OrderOrchestrator {
         state: "PENDING",
         items: [],
         priority: Math.random() < 0.25 ? "HIGH" : "NORMAL", 
-      });
+  enteredAt: Date.now(),
+  });
       this.maxOrders--;
       if (this.maxOrders <= 0) {
         clearInterval(this.interval);

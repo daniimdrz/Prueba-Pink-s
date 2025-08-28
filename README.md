@@ -19,3 +19,20 @@ Buscamos un Problem solver! se creativo e inteligente pero astuto; mvp first. Pr
 3. Envía el enlace a tu repositorio a la dirección de correo electrónico indicada en la convocatoria del desafío.
 
 ¡Estamos emocionados de ver tu creatividad y habilidades en acción! Buena suerte y que empiece el desafío <3
+
+# Cambios realizados en la prueba técnica
+
+Nuevas funcionalidades y mejoras:
+
+- Drag and drop funcional para mover los pedidos.
+- Los riders pueden aceptar los pedidos, eliminando automaticamente la orden de la columna "Listo".
+- Los riders cuyo pedido está en la columna de Listo, se muestran primero, para agilizar el proceso de entrega.
+- Emojis y colores dinámicos en las cards según el estado del pedido.
+- Notificación por sonido para pedidos y riders, con un botón que activa y desactiva estas notificaciones.
+- Prioridad alta en pedidos: algunos pedidos se generan aleatoriamente como "Alta prioridad", se muestran primero y tienen badge y sonido especial.
+- Timer en cada card, que se resetea al cambiar de columna y muestra el tiempo transcurrido, tras 30 segundos de espera en la columna de pendiente y en listo, las cards empiezan a vibrar.
+- Historial de pedidos entregados/cancelados accesible desde el header.
+- Botón para cancelar pedidos, con confirmación y registro en historial.
+- Eliminación automática de riders asociados al cancelar un pedido.
+
+La vibración de las cards está ajustada a 30 segundos para que sea visible, en un caso real se ajustaría más tarde.

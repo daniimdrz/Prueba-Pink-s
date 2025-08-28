@@ -29,10 +29,9 @@
   &__navbar-right {
     display: flex;
     align-items: center;
-    gap: 16px; // Espacio entre los botones
+    gap: 16px; 
   }
 
-  // Nueva clase para el botón con texto
   &__text-button {
     background-color: #f0f0f0;
     border: 1px solid #ccc;
@@ -50,7 +49,6 @@
     }
   }
 
-  // Estilos para el botón de icono (sonido)
   &__icon-button {
     background: none;
     border: none;
